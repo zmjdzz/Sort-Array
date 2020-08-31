@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+
+int *SortArray(int *StrA, int lenA, int *StrB, int lenB)//用指针来传递数据方便修改数据
+{
+	if (StrA == NULL || StrB == NULL)//只要某一数组为空，返回NULL
+		return NULL;
+
+	int *StrC = new int[lenA + lenB ];//创建一个大小为两个数组大小和的数组，用Strc标记
+
+	int i = 0, j = 0, k = 0;//i,j,k分别是A、B、C数组的位数，起始位数为0
+	while (i < lenA && j < lenB)//循环到某一个数组为空就退出循环
+	{
+		if (StrA[i] < StrB[j])//如果数组A的元素小于数组B的元素，就把数组A的元素放到数组C
+			StrC[k++] = StrA[i++];//把A数组的第i位赋值给c数组的第k位，再分别加一
+		else//如果数组A的元素大于数组B的元素，把数组B的元素放到数组C
+		{
+			StrC[k++] = StrB[j++];//把B数组的第j位赋值给C数组的第k位，再分别加一
+		}
+	}
+
+	while (i < lenA)//当A数组为空时，把此时剩余的数组A的元素放入数组C中（已经是有序数组了）
+	{
+		StrC[k++] = StrA[i++];
+	}
+
+	while (j < lenB)//当B数组为空时，把此时剩余的数组B的元素放入数组C中
+	{
+		StrC[k++] = StrB[j++];	
+	}
+
+	return StrC;
+}
+int main()
+{
+	int array1[] = { 1,2,3 };
+	int array2[] = { -1,4,6 };
+	int lenA = sizeof(array1) / sizeof(int);//1数组长度
+	int lenB = sizeof(array2) / sizeof(int);//2数组长度
+	int *p = SortArray(array1, lenA, array2, lenB);
+	cout << '{';
+	for (int i = 0; i < (lenA + lenB); i++)
+		cout <<  p[i] << ' ' ;
+	cout << '}';
+	system("pause");
+	return 0;
+}
